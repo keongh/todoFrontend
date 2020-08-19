@@ -10,6 +10,7 @@ export default class TodoList extends Component {
     };
 
     this.updateTodo = this.updateTodo.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   componentDidMount() {
@@ -31,12 +32,20 @@ export default class TodoList extends Component {
     });
   }
 
+  delete(todoId) {
+    axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/${todoId}`).then(() => {
+      axios.get(process.env.REACT_APP_API_ENDPOINT).then(res => {
+        this.setState({ todos: res.data });
+      });
+    });
+  }
+
   render() {
     return (
       <div>
         <ul>
           { this.state.todos.map(todo => {
-              return <TodoItem key={todo.id} id={todo.id} completed={todo.completed} task={todo.task} updateTodo={this.updateTodo} />
+              return <TodoItem key={todo.id} id={todo.id} completed={todo.completed} task={todo.task} updateTodo={this.updateTodo} delete={this.delete}/>
           })
         }
         </ul>
