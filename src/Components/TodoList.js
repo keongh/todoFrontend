@@ -40,6 +40,12 @@ export default class TodoList extends Component {
     });
   }
 
+  updateList() {
+    axios.get(process.env.REACT_APP_API_ENDPOINT).then(res => {
+      this.setState({ todos: res.data });
+    });
+  }
+
   render() {
     return (
       <div>

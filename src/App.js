@@ -13,6 +13,7 @@ export default class App extends Component {
 
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.todoListElement = React.createRef();
     }
 
     handleChange(e) {
@@ -24,9 +25,12 @@ export default class App extends Component {
       axios.post(process.env.REACT_APP_API_ENDPOINT, {
         "Task": this.state.newTodo,
         "Completed": false
+      }).then(() => {
+        this.setState({ newTodo: "" });
+        this.todoListElement.current.updateList();
       });
-      this.setState({ newTodo: "" })
     }
+
 
     render() {
       return (
@@ -37,7 +41,7 @@ export default class App extends Component {
             <button type="submit" onClick={this.handleSubmit}>Submit</button>
           </form>
           <h4>Todo</h4>
-          <TodoList />
+          <TodoList ref={this.todoListElement}/>
         </div>
       );
   }
