@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import TodoList from './Components/TodoList.js';
 
 export default class App extends Component {
     constructor(props) {
@@ -36,6 +37,7 @@ export default class App extends Component {
             <button type="submit" onClick={this.handleSubmit}>Submit</button>
           </form>
           <h4>Todo</h4>
+          <TodoList />
         </div>
       );
   }
