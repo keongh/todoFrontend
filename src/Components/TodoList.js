@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import TodoItem from './TodoItem.js';
 
 export default class TodoList extends Component {
   constructor(props) {
@@ -7,6 +8,8 @@ export default class TodoList extends Component {
     this.state = {
       todos: []
     };
+
+    this.updateTodo = this.updateTodo.bind(this);
   }
 
   componentDidMount() {
@@ -16,17 +19,24 @@ export default class TodoList extends Component {
     });
   }
 
+  updateTodo(todoId, task, completed) {
+    axios.put(`${process.env.REACT_APP_API_ENDPOINT}/${todoId}`, {
+      "Id": todoId,
+      "Task": task,
+      "Completed": completed
+    }).then(() => {
+      axios.get(process.env.REACT_APP_API_ENDPOINT).then(res => {
+          this.setState({ todos: res.data });
+        });
+    });
+  }
+
   render() {
-    return(
+    return (
       <div>
         <ul>
           { this.state.todos.map(todo => {
-            if (!todo.completed) {
-              return <li key={todo.id}>{todo.task}</li>
-            }
-            else {
-              return <li key={todo.id} style={{ textDecoration: "line-through" }}>{todo.task}</li>
-            }
+              return <TodoItem key={todo.id} id={todo.id} completed={todo.completed} task={todo.task} updateTodo={this.updateTodo} />
           })
         }
         </ul>
