@@ -6,7 +6,8 @@ export default class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todos: []
+      todos: [],
+      loading: true
     };
 
     this.updateTodo = this.updateTodo.bind(this);
@@ -16,7 +17,10 @@ export default class TodoList extends Component {
   componentDidMount() {
     axios.get(process.env.REACT_APP_API_ENDPOINT)
     .then(res => {
-      this.setState({ todos: res.data });
+      this.setState({
+        todos: res.data,
+        loading: false
+      });
     });
   }
 
@@ -47,6 +51,13 @@ export default class TodoList extends Component {
   }
 
   render() {
+    if (this.state.loading === true) {
+      return (
+        <div>
+        <p>Loading...</p>
+        </div>
+      )
+    }
     return (
       <div>
         <ul>
