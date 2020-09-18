@@ -20,7 +20,7 @@ export default class TodoItem extends Component {
     if (!this.props.completed) {
       return (
         <div>
-          {this.props.task}<button onClick={this.toggleDone}>Done</button>
+          {this.props.task}<button style={{marginLeft:"5px"}}onClick={this.toggleDone}>Done</button>
             <button onClick={this.deleteTodo}>Delete</button>
         </div>
       );
@@ -29,7 +29,7 @@ export default class TodoItem extends Component {
       return (
         <div>
           <p style={{textDecoration: "line-through"}}>{this.props.task}
-          <button onClick={this.toggleDone}>Undo</button>
+          <button style={{marginLeft:"5px"}}onClick={this.toggleDone}>Undo</button>
           <button onClick={this.deleteTodo}>Delete</button></p>
         </div>
       )
